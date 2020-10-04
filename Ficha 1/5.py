@@ -26,26 +26,44 @@ def lerMatriz():
             matriz[i, j] = int(input())
     return matriz
 
+"""
+(a)
+"""
 def produtoElementoaElementoMatriz(a, b):
     z = a * b
     return z
 
+"""
+(b)
+"""
 def diferencaMatriz(a, b):
     z = a - b
     return z
 
+"""
+(c)
+"""
 def multiplicacaoMatriz(a, b):
     z = a.dot(b)
     return z
 
+"""
+(d)
+"""
 def logMatriz(a):
     a = np.absolute(a)
     z = np.log(a)
     return z
 
+"""
+(e)
+"""
+def maiorXmenor(a,b):
+    z = np.amax(matriz1, axis=1)
+    z2 = np.amin(matriz2, axis=0)
+    return z[1]* z2[0]
+
 matriz1 = lerMatriz()
-#matriz2 = lerMatriz()
+matriz2 = lerMatriz()
 
-z = logMatriz(matriz1)
-
-print(z)
+print(maiorXmenor(matriz1, matriz2))
