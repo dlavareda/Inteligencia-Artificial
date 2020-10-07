@@ -30,12 +30,50 @@ with open('/home/dlavareda/Documents/UBI/IA/Inteligencia-Artificial/Ficha 1/mapa
     for row in reader:
         G.add_edge(row[0], row[1], weight=row[2])
 
-pos=nx.fruchterman_reingold_layout(G)
-plt.figure(3,figsize=(18,18)) 
-nx.draw_networkx(G,pos)
-labels = nx.get_edge_attributes(G,'weight')
-nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
-#guarda imagem
-plt.savefig("Ficha 1/map.png")
-#mostra imagem
-plt.show()
+
+print("Qual a cidade de origem?")
+origem = input()
+
+print("Qual a cidade de destino?")
+destino = input()
+
+sp = dict(nx.all_pairs_shortest_path(G))
+caminho = sp[origem][destino]
+print(caminho)
+
+
+
+
+print("Deseja ver o mapa? 1-SIM 0-NAO")
+resp = input()
+if int(resp) == 1:
+    plt.figure(3,figsize=(18,18)) 
+    pos = nx.spring_layout(G)
+    nx.draw_networkx(G,pos)
+    # draw path in red
+    path = nx.shortest_path(G, source=origem, target=destino)
+    labels = nx.get_edge_attributes(G,'weight')
+    nx.draw_networkx_nodes(G,pos,nodelist=path,node_color='r')
+    nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
+    #guarda imagem
+    plt.savefig("Ficha 2/map.png")
+    #mostra imagem
+    plt.show()
+
+"""
+print("Deseja ver o mapa? 1-SIM 0-NAO")
+resp = input()
+if int(resp) == 1:
+    plt.figure(3,figsize=(18,18)) 
+    pos = nx.spring_layout(G)
+    nx.draw_networkx(G,pos)
+    # draw path in red
+    path = nx.shortest_path(G, source=origem, target=destino)
+    labels = nx.get_edge_attributes(G,'weight')
+    nx.draw_networkx_nodes(G,pos,nodelist=path,node_color='r')
+    nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
+    #guarda imagem
+    plt.savefig("Ficha 2/map.png")
+    #mostra imagem
+    plt.show()
+"""
