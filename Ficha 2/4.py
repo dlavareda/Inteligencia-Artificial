@@ -1,16 +1,12 @@
-"""1. Adapte a sua solução do exercício 8 da folha 1 para que o seu programa
-peça ao utilizador para introduzir uma cidade de partida e outra de destino e,
-usando a pesquisa não informada primeiro em largura:
-(a) mostre a solução obtida sob a forma da sequência de cidades correspondente ao caminho a percorrer entre a cidade de partida e a de destino;
-(b) mostre o comprimento total do percurso a percorrer;
-(c) mostre no ecrã a árvore de pesquisa criada pelo seu algoritmo ao procurar a solução.
 """
-
+4. Implemente a pesquisa não informada primeiro em profundidade e complete
+a tabela do exercício anterior com os respetivos resultados.
+"""
 import csv
 import matplotlib
 import matplotlib.pyplot as plt
 import networkx as nx
-
+from networkx import algorithms
 
 #Leitura do ficheiro .txt e criação do Grafo
 def readGraph():
@@ -30,9 +26,10 @@ def somaDistancia(G, L):
         sum += int(G[start][end]['weight'])
     return sum
 
+
+
 def main():
     G = readGraph()
-    nx.draw(G)
     #Leira da origem e destino
     origem = ""
     while not G.has_node(origem):
@@ -43,15 +40,13 @@ def main():
         print("Qual a cidade de destino?")
         destino = input()
     #Gera a Árvore
-    tree = nx.traversal.breadth_first_search.bfs_tree(G, origem)
+    tree = nx.traversal.depth_first_search.dfs_tree(G, origem)
     #Gera o caminho
     caminho = nx.shortest_paths.generic.shortest_path(tree, origem, destino)
     #Mostra caminho e Distancia
-    print(caminho, "- Distancia =", somaDistancia(G, caminho))
+    print(caminho, somaDistancia(G, caminho))
     #desenha grafo
     nx.draw(tree, with_labels=True)
-    #guarda imagem
-    plt.savefig("Ficha 2/map(1).png")
     #mostra imagem
     plt.show()
 

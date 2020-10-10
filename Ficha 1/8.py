@@ -25,7 +25,7 @@ import networkx as nx
 G = nx.Graph()
 nx.draw(G)
 
-with open('/home/dlavareda/Documents/UBI/IA/Inteligencia-Artificial/Ficha 1/mapa.txt', newline='') as csvfile:
+with open('/home/dlavareda/Documents/UBI/IA/GITHUB/Inteligencia-Artificial/Ficha 1/mapa.txt', newline='') as csvfile:
     reader = csv.reader(csvfile, delimiter=',')
     for row in reader:
         G.add_edge(row[0], row[1], weight=row[2])

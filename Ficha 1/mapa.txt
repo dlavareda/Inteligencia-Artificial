@@ -21,11 +21,11 @@ Lisboa,Santarém,70
 Santarém,Castelo_Branco,200
 Santarém,Portalegre,150
 Portalegre,Castelo_Branco,80
-Santarém,Évora,120
-Lisboa,Évora,150
-Évora,Portalegre,100
+Santarém,Evora,120
+Lisboa,Evora,150
+Evora,Portalegre,100
 Lisboa,Setúbal,50
 Setúbal,Beja,135
-Beja,Évora,80
+Beja,Evora,80
 Setúbal,Faro,260
 Faro,Beja,170
