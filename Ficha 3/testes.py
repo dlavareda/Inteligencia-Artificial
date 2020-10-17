@@ -81,5 +81,5 @@ def main():
         T = resultado(T, max, "MAX")
         mostra_tabuleiro(T)
         
-    print("ganhou", utilidade(T))
+    print("Venceu o jogador ", utilidade(T))
 main()

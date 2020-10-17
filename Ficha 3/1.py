@@ -1,25 +1,4 @@
-"""
-Posição pode valer 1 se estiver ocupada pelo jogador MAX, -1 se estiver ocupada pelo jogador MIN e 0 se estiver vazia.
-
-Tabuleiro
-0 1 2
-3 4 5
-6 7 8
-
-MAX joga para 0
-X . .
-. . .
-. . .
-
-O - MIN
-X - MAX
-. - Vazio
-
-"""
-
-
-
-# coding: utf8
+import numpy as np
 import copy
 import random
 
@@ -54,9 +33,9 @@ def acoes(T):
 def resultado(T,a,jog):
     aux = copy.copy(T)
     if (jog == "MAX"):
-        aux[a] = 1
+        aux[int(a)] = 1
     if (jog == "MIN"):
-        aux[a] = -1    
+        aux[int(a)] = -1    
     return aux
 
 # ------------------------------------------------------------------
@@ -117,53 +96,99 @@ def alfabeta(T,alfa,beta,jog):
                 break
         return v,ba,resultado(T,ba,'MAX')
     else:
-        # COMPLETAR
+        v = 10
+        for a in acoes(T):
+            v1,ac,es = alfabeta(resultado(T,a,'MIN'),alfa,beta,'MAX')
+            if v1 < v: # guardo a ação que corresponde ao pior
+                v = v1
+                ba = a
+            beta = min(beta,v)
+            if alfa>= beta:
+                break
+        return v,ba,resultado(T,ba,'MIN')
 
 # ------------------------------------------------------------------
 def joga_max(T):
     v,a,e = alfabeta(T,-10,10,'MAX')
-    print ('MAX joga para ',a)
+    print ('MAX joga para ',int(a))
     return e
 
 # ------------------------------------------------------------------
 def joga_min(T):
-    # IMPLEMENTAR
+    v,a,e = alfabeta(T,-10,10,'MIN')
+    print ('MIN joga para ',int(a))
+    return e
 
 # ------------------------------------------------------------------
-def jogo(p1,p2):
+def jogo(T, p1,p2):
     # cria tabuleiro vazio
-    T = [0,0,0,0,0,0,0,0,0]
+    #T = [0,0,0,0,0,0,0,0,0]
     # podemos partir de um estado mais "avançado"
     #T = [1,-1,0,0,-1,0,1,0,0]
     mostra_tabuleiro(T)
     while not estado_terminal(T):
-        T = p1(T)
+        if p1.__name__ == "joga_rand" and p2.__name__ == "joga_min":
+            T = p1(T, 1)
+        elif p1.__name__ == "joga_rand" and p2.__name__ == "joga_max":
+            T = p1(T, -1)
+        else:
+            T = p1(T)
         mostra_tabuleiro(T)
         if not estado_terminal(T):
-            T = p2(T)
+            if p2.__name__ == "joga_rand" and p1.__name__ == "joga_min":
+                T = p2(T, 1)
+            elif p2.__name__ == "joga_rand" and p1.__name__ == "joga_max":
+                T = p2(T, -1)
+            else:    
+                T = p2(T)
             mostra_tabuleiro(T)
     # fim
     if utilidade(T) == 1:
-        print ('Venceu o jog1')
+        print ('Venceu o MAX')
     elif utilidade(T) == -1:
-        print ('Venceu o jog2')
+        print ('Venceu o MIN')
     else:
         print ('Empate')
 
 # ------------------------------------------------------------------
+#dado um tabuleiro diz qual o proximo jogador a jogar, para uso no RAND
+def descobreJogador(T):
+    min = 0
+    max = 0
+    for a in T:
+        if T[a] == -1:
+            min = min + 1
+        if T[a] == 1:
+            max = max + 1
+    if min > max:
+        return 1
+    if max > min:
+        return -1
+    if max == min:
+        return -1
+
 # jogador aleatório
-def joga_rand(T):
-    x = random.randint(0,8)
-    # COMPLETAR
-    return T
+def joga_rand(T, jog):
+    #jog = descobreJogador(T)
+    x = -1
+    while(x not in acoes(T)):
+        x = random.randint(0,8)
+    T[x] = jog
+    print (jog, ' joga para ',int(x))
+    if jog == -1:
+        return resultado(T,x,'MIN')
+    if jog == 1:
+        return resultado(T,x,'MAX')
 
 # ------------------------------------------------------------------
 # main
 def main():
+    # cria tabuleiro vazio
+    T = [0,0,0,0,0,0,0,0,0]
     # deve ganhar quase sempre o max:
-    jogo(joga_max,joga_rand)
+    jogo(T,joga_min, joga_rand)
     # devem empatar sempre:
-    #jogo(joga_max,joga_min)
+    #jogo(T, joga_max,joga_min)
 
 
 main()
