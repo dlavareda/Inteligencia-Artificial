@@ -9,7 +9,8 @@ Tentativas =  773999
 P13  0.30547
 P22  0.89226
 P31  0.28716
-            
+
+1000 com 0.99 de probabilidade  
 Mundos válidos =  10000
 Tentativas =  100332104
 P13  0.9906
