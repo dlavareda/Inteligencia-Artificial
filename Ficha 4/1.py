@@ -41,7 +41,7 @@ def gerarMundo(T):
     for l in range(0, 4):
         for c in range(0, 4):
             #geração de poços
-            if np.random.rand() <= 0.99:
+            if np.random.rand() <= 0.01:
                 T[l][c] = 1
     T = gerarBrisas(T)
     return T
